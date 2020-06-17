@@ -84,12 +84,7 @@ ingress:
   annotations: 
     kubernetes.io/ingress.class: ambassador
     # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: qox.jdwl.in
-      paths:
-      - path: /
-        serviceName: qor
-        servicePort: 80
+  domain: "jdwl.in"
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:

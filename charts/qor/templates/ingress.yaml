@@ -27,15 +27,11 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-    {{- range .Values.ingress.hosts }}
-    - host: {{ .host | quote }}
+    - host: qor-{{ .Release.Namespace }}.{{ .Values.ingress.domain }}
       http:
         paths:
-          {{- range .paths }}
-          - path: {{ .path }}
+          - path: "/"
             backend:
               serviceName: {{ $fullName }}
               servicePort: {{ $svcPort }}
-          {{- end }}
-    {{- end }}
   {{- end }}
