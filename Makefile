@@ -1,4 +1,4 @@
-CHART=qor
+CHART=qox
 
 all: lint
 

@@ -1,0 +1,121 @@
+# Default values for qor.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: dfang/qor-demo
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  # tag: "develop-20200112.1"
+  tag: "develop-20201016.8"
+
+env:          
+- name: DEBUG
+  value: "true"
+- name: DBAdapter
+  value: "postgres"
+- name: DBPort
+  value: "5432"
+- name: DBName
+  value: "29f5df33fc60c1fb522e"
+- name: DBHost
+  value: "postgres"
+- name: DBUser
+  value: "postgres"
+- name: DBPassword
+  value: "postgres"
+- name: PORT
+  value: "7000"
+- name: AUTH_CORP_ID
+  value: "wxfd0a488aa1fa5171"
+- name: AUTH_CORP_SECRET
+  value: "i8yAsu3P5vl5RcG7QFEqMT96_aFCdL9Tj9np2skkI1I"
+- name: AUTH_AGENT_ID
+  value: "1000027"
+- name: AUTH_DOMAIN
+  value: "www.xsjd123.com"
+- name: REDIS_HOST
+  value: "redis"
+- name: REDIS_PORT
+  value: "6379"
+
+- name: FAKTORY_HOST
+  value: faktory
+- name: FAKTORY_UI_PORT
+  value: 7420
+
+- name: FAKTORY_URL
+  value: "tcp://:admin@faktory:7419"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: "qor"
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  annotations: 
+    kubernetes.io/ingress.class: ambassador
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: qox.jdwl.in
+      paths:
+      - path: /
+        serviceName: qor
+        servicePort: 80
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
